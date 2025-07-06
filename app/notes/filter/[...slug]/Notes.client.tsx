@@ -9,8 +9,8 @@ import SearchBox from "@/components/SearchBox/SearchBox";
 import Pagination from "@/components/Pagination/Pagination";
 import NoteList from "@/components/NoteList/NoteList";
 import { ResponseGetData } from "@/types/ResponseGetData";
-import { redirect } from "next/navigation";
 import Modal from "@/components/Modal/Modal";
+import NoteForm from "@/components/NoteForm/NoteForm";
 
 type Props = {
   initialData: ResponseGetData;
@@ -51,7 +51,7 @@ export default function NotesClient({ initialData, tag }: Props) {
         <button
           className={css.button}
           onClick={() => {
-            redirect("/");
+            setIsModalOpen(true);
           }}
         >
           Create note +
@@ -60,7 +60,11 @@ export default function NotesClient({ initialData, tag }: Props) {
       {allNotes.isSuccess && allNotes.data.notes.length > 0 && (
         <NoteList items={allNotes.data.notes} />
       )}
-      {isModalOpen && <Modal onClose={() => setIsModalOpen(false)} />}
+      {isModalOpen && (
+        <Modal onClose={() => setIsModalOpen(false)}>
+          <NoteForm onClose={() => setIsModalOpen(false)} />
+        </Modal>
+      )}
     </div>
   );
 }

@@ -9,7 +9,7 @@ import css from "./NotePreview.module.css";
 import { format, parseISO } from "date-fns";
 
 interface NotePreviewClientProps {
-  id?: string;
+  id: string;
 }
 
 export default function NotePreviewClient({ id }: NotePreviewClientProps) {
