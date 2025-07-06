@@ -1,12 +1,12 @@
-import axios from 'axios';
-import type { Note, NewNote } from '../types/note';
-import { ResponseGetData } from '@/types/ResponseGetData';
+import axios from "axios";
+import type { Note, NewNote } from "../types/note";
+import { ResponseGetData } from "@/types/ResponseGetData";
 
-axios.defaults.baseURL = 'https://notehub-public.goit.study/api';
+axios.defaults.baseURL = "https://notehub-public.goit.study/api";
 const notehubToken = process.env.NEXT_PUBLIC_NOTEHUB_TOKEN;
 
 const headers = {
-  Accept: 'application/json',
+  Accept: "application/json",
   Authorization: `Bearer ${notehubToken}`,
 };
 
@@ -15,12 +15,12 @@ export async function fetchNotes(
   searchText: string,
   tag?: string
 ): Promise<ResponseGetData> {
-  const { data } = await axios.get<ResponseGetData>('/notes', {
+  const { data } = await axios.get<ResponseGetData>("/notes", {
     params: {
       page,
       perPage: 16,
-      ...(searchText !== '' ? { search: searchText } : {}),
-      ...(tag !== 'All%20notes' ? { tag } : {}),
+      ...(searchText !== "" ? { search: searchText } : {}),
+      ...(tag !== "All%20notes" ? { tag } : {}),
     },
     headers,
   });
@@ -28,7 +28,7 @@ export async function fetchNotes(
 }
 
 export async function createNote(newNote: NewNote): Promise<Note> {
-  const { data } = await axios.post<Note>('/notes', newNote, { headers });
+  const { data } = await axios.post<Note>("/notes", newNote, { headers });
   return data;
 }
 

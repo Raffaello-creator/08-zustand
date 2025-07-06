@@ -1,33 +1,34 @@
-'use client';
+"use client";
 
-import { fetchNotes } from '@/lib/api';
-import { keepPreviousData, useQuery } from '@tanstack/react-query';
-import { useState } from 'react';
-import { useDebounce } from 'use-debounce';
-import css from './NotesPage.module.css';
-import SearchBox from '@/components/SearchBox/SearchBox';
-import Pagination from '@/components/Pagination/Pagination';
-import NoteList from '@/components/NoteList/NoteList';
-import { ResponseGetData } from '@/types/ResponseGetData';
-import { redirect } from 'next/navigation';
+import { fetchNotes } from "@/lib/api";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
+import { useState } from "react";
+import { useDebounce } from "use-debounce";
+import css from "./NotesPage.module.css";
+import SearchBox from "@/components/SearchBox/SearchBox";
+import Pagination from "@/components/Pagination/Pagination";
+import NoteList from "@/components/NoteList/NoteList";
+import { ResponseGetData } from "@/types/ResponseGetData";
+import { redirect } from "next/navigation";
+import Modal from "@/components/Modal/Modal";
 
 type Props = {
   initialData: ResponseGetData;
-  category: string;
+  tag: string;
 };
 
-export default function NotesClient({ initialData, category }: Props) {
-  const [search, setSearch] = useState('');
+export default function NotesClient({ initialData, tag }: Props) {
+  const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
-  // const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [debouncedQuery] = useDebounce(search, 1000);
 
   const allNotes = useQuery({
-    queryKey: ['allNotes', debouncedQuery, page, category],
-    queryFn: () => fetchNotes(page, debouncedQuery, category),
+    queryKey: ["allNotes", debouncedQuery, page, tag],
+    queryFn: () => fetchNotes(page, debouncedQuery, tag),
     placeholderData: keepPreviousData,
     refetchOnMount: false,
-    initialData: page === 1 && search === '' ? initialData : undefined,
+    initialData: page === 1 && search === "" ? initialData : undefined,
   });
 
   function handleSearch(search: string) {
@@ -50,7 +51,7 @@ export default function NotesClient({ initialData, category }: Props) {
         <button
           className={css.button}
           onClick={() => {
-            redirect('/');
+            redirect("/");
           }}
         >
           Create note +
@@ -59,7 +60,7 @@ export default function NotesClient({ initialData, category }: Props) {
       {allNotes.isSuccess && allNotes.data.notes.length > 0 && (
         <NoteList items={allNotes.data.notes} />
       )}
-      {/* {isModalOpen && <Modal onClose={() => setIsModalOpen(false)} />} */}
+      {isModalOpen && <Modal onClose={() => setIsModalOpen(false)} />}
     </div>
   );
 }

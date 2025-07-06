@@ -1,5 +1,5 @@
-import { fetchNotes } from '@/lib/api';
-import NotesClient from './Notes.client';
+import { fetchNotes } from "@/lib/api";
+import NotesClient from "./Notes.client";
 
 type Props = {
   params: Promise<{ slug: string[] }>;
@@ -7,8 +7,8 @@ type Props = {
 
 export default async function Notes({ params }: Props) {
   const { slug } = await params;
-  const slugURL = slug?.join('/');
-  const response = await fetchNotes(1, '', slugURL);
+  const tag = slug?.[0] || "";
+  const response = await fetchNotes(1, "", tag);
 
-  return <NotesClient initialData={response} category={slugURL} />;
+  return <NotesClient initialData={response} tag={tag} />;
 }
