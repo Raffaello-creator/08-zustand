@@ -20,7 +20,7 @@ export async function fetchNotes(
       page,
       perPage: 16,
       ...(searchText !== "" ? { search: searchText } : {}),
-      ...(tag !== "All%20notes" ? { tag } : {}),
+      ...(tag !== "All" ? { tag } : {}),
     },
     headers,
   });

@@ -1,11 +1,11 @@
 // Внесіть зміну у розмітку компонента NoteList.
-'use client';
+"use client";
 
-import { Note } from '@/types/note';
-import css from './NoteList.module.css';
-import NoteItem from '../NoteItem/NoteItem';
-import { deleteNote } from '@/lib/api';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { Note } from "@/types/note";
+import css from "./NoteList.module.css";
+import NoteItem from "../NoteItem/NoteItem";
+import { deleteNote } from "@/lib/api";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 type Props = {
   items: Note[];
@@ -18,23 +18,21 @@ export default function NoteList({ items }: Props) {
     mutationFn: deleteNote,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['allNotes'],
+        queryKey: ["allNotes"],
       });
     },
   });
 
   return (
     <ul className={css.list}>
-      {items
-        // .filter(note => note.id)
-        .map(el => (
-          <NoteItem
-            key={el.id}
-            item={el}
-            removeItem={removeItem}
-            isPending={isPending}
-          />
-        ))}
+      {items.map((el) => (
+        <NoteItem
+          key={el.id}
+          item={el}
+          removeItem={removeItem}
+          isPending={isPending}
+        />
+      ))}
     </ul>
   );
 }

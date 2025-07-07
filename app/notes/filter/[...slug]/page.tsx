@@ -8,7 +8,7 @@ type Props = {
 export default async function Notes({ params }: Props) {
   const { slug } = await params;
   const tag = slug?.[0] || "";
-  const response = await fetchNotes(1, "", tag);
+  const response = await fetchNotes(1, "", tag === "All" ? undefined : tag);
 
   return <NotesClient initialData={response} tag={tag} />;
 }

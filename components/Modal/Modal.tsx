@@ -1,11 +1,11 @@
 "use client";
 
-import { MouseEvent, ReactNode } from "react";
+import { useEffect, useCallback, MouseEvent, ReactNode } from "react";
 import { createPortal } from "react-dom";
 import css from "./Modal.module.css";
 
 type Props = {
-  children?: ReactNode;
+  children: ReactNode;
   onClose: () => void;
 };
 
@@ -15,6 +15,25 @@ export default function Modal({ children, onClose }: Props) {
       onClose();
     }
   };
+
+  const handleKeyDown = useCallback(
+    (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        onClose();
+      }
+    },
+    [onClose]
+  );
+
+  useEffect(() => {
+    document.addEventListener("keydown", handleKeyDown);
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "";
+    };
+  }, [handleKeyDown]);
 
   return createPortal(
     <div

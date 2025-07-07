@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import css from './TagsMenu.module.css';
-import { useState } from 'react';
+import Link from "next/link";
+import css from "./TagsMenu.module.css";
+import { useState } from "react";
 
 export default function TagsMenu() {
   const [isOpen, setIsOpen] = useState(false);
@@ -12,12 +12,12 @@ export default function TagsMenu() {
   }
 
   const tagsList = [
-    'All notes',
-    'Todo',
-    'Work',
-    'Personal',
-    'Meeting',
-    'Shopping',
+    "All notes",
+    "Todo",
+    "Work",
+    "Personal",
+    "Meeting",
+    "Shopping",
   ];
 
   return (
@@ -30,7 +30,7 @@ export default function TagsMenu() {
           {tagsList.map((tag, i) => (
             <li key={i} className={css.menuItem}>
               <Link
-                href={`/notes/filter/${tag}`}
+                href={`/notes/filter/${tag.split(" ")[0]}`}
                 className={css.menuLink}
                 onClick={toggle}
               >
