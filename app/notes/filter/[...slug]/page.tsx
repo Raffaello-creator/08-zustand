@@ -3,15 +3,17 @@ import NotesClient from "./Notes.client";
 import type { Metadata } from "next";
 
 type Props = {
-  params: { slug?: string[] };
+  params: Promise<{ slug?: string[] }>;
 };
 
 export async function generateMetadata({
   params,
 }: {
-  params: { slug?: string[] };
+  params: Promise<{ slug?: string[] }>;
 }): Promise<Metadata> {
-  const tag = params.slug?.[0] || "All";
+  const { slug } = await params;
+  const tag = slug?.[0] || "All";
+
   const title = `NoteHub - ${tag} notes`;
   const description = `Review of notes filtered by category: ${tag}.`;
 
@@ -35,7 +37,7 @@ export async function generateMetadata({
 }
 
 export default async function Notes({ params }: Props) {
-  const { slug } = params;
+  const { slug } = await params;
   const tag = slug?.[0] || "";
   const response = await fetchNotes(1, "", tag === "All" ? undefined : tag);
 
