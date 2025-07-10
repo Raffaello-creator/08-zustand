@@ -11,6 +11,7 @@ import NoteList from "@/components/NoteList/NoteList";
 import { ResponseGetData } from "@/types/ResponseGetData";
 import Modal from "@/components/Modal/Modal";
 import NoteForm from "@/components/NoteForm/NoteForm";
+import Link from "next/link";
 
 type Props = {
   initialData: ResponseGetData;
@@ -48,14 +49,9 @@ export default function NotesClient({ initialData, tag }: Props) {
             onPageChange={setPage}
           />
         )}
-        <button
-          className={css.button}
-          onClick={() => {
-            setIsModalOpen(true);
-          }}
-        >
+        <Link href="../action/create" className={css.createButton}>
           Create note +
-        </button>
+        </Link>
       </div>
       {allNotes.isSuccess && allNotes.data.notes.length > 0 && (
         <NoteList items={allNotes.data.notes} />
