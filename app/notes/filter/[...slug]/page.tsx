@@ -3,13 +3,13 @@ import NotesClient from "./Notes.client";
 import type { Metadata } from "next";
 
 type Props = {
-  params: Promise<{ slug: string[] }>;
+  params: { slug?: string[] };
 };
 
 export async function generateMetadata({
   params,
 }: {
-  params: { slug: string[] };
+  params: { slug?: string[] };
 }): Promise<Metadata> {
   const tag = params.slug?.[0] || "All";
   const title = `NoteHub - ${tag} notes`;
