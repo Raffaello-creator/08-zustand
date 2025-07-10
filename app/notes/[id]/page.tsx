@@ -10,11 +10,8 @@ import { Metadata } from "next";
 type Props = {
   params: { id: string };
 };
-export async function generateMetadata({
-  params,
-}: {
-  params: { id: string };
-}): Promise<Metadata> {
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = params;
   const note = await fetchNoteById(Number(id));
 
