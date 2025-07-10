@@ -15,6 +15,8 @@ export const metadata: Metadata = {
         alt: "404 - Page not found",
       },
     ],
+    siteName: "NoteHub",
+    url: "https://08-zustand-lake-chi.vercel.app/not-found",
   },
 };
 

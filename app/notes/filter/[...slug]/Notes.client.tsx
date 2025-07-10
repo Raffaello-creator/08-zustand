@@ -9,8 +9,6 @@ import SearchBox from "@/components/SearchBox/SearchBox";
 import Pagination from "@/components/Pagination/Pagination";
 import NoteList from "@/components/NoteList/NoteList";
 import { ResponseGetData } from "@/types/ResponseGetData";
-import Modal from "@/components/Modal/Modal";
-import NoteForm from "@/components/NoteForm/NoteForm";
 import Link from "next/link";
 
 type Props = {
@@ -21,7 +19,6 @@ type Props = {
 export default function NotesClient({ initialData, tag }: Props) {
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [debouncedQuery] = useDebounce(search, 1000);
 
   const allNotes = useQuery({
@@ -49,17 +46,12 @@ export default function NotesClient({ initialData, tag }: Props) {
             onPageChange={setPage}
           />
         )}
-        <Link href="../action/create" className={css.createButton}>
+        <Link href="/notes/action/create" className={css.createButton}>
           Create note +
         </Link>
       </div>
       {allNotes.isSuccess && allNotes.data.notes.length > 0 && (
         <NoteList items={allNotes.data.notes} />
-      )}
-      {isModalOpen && (
-        <Modal onClose={() => setIsModalOpen(false)}>
-          <NoteForm onClose={() => setIsModalOpen(false)} />
-        </Modal>
       )}
     </div>
   );
